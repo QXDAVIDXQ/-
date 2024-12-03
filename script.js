@@ -27,12 +27,15 @@ function handleClick(col) {
             board[row][col] = currentPlayer;
             updateBoard();
             if (checkWinner(row, col)) {
-                document.getElementById('status').textContent = `${currentPlayer === 'red' ? 'Rote' : 'Gelbe'} Spieler hat gewonnen!`;
-                gameOver = true;
+                setTimeout(() => {
+                    document.getElementById('status').textContent = `${currentPlayer === 'red' ? 'Der rote' : 'Der gelbe'} Spieler hat gewonnen!`;
+                    gameOver = true;
+                    triggerConfetti();
+                }, 500);
                 return;
             }
             currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red';
-            document.getElementById('status').textContent = `Es ist ${currentPlayer === 'red' ? 'rote' : 'gelbe'} Spieler's Zug.`;
+            document.getElementById('status').textContent = `Es ist der Zug des ${currentPlayer === 'red' ? 'roten' : 'gelben'} Spielers.`;
             return;
         }
     }
@@ -92,11 +95,19 @@ function checkDirection(row, col, rowDir, colDir) {
     return count >= 4;
 }
 
+function triggerConfetti() {
+    confetti({
+        particleCount: 200,
+        spread: 90,
+        origin: { y: 0.6 }
+    });
+}
+
 function resetGame() {
     board = [];
     currentPlayer = 'red';
     gameOver = false;
-    document.getElementById('status').textContent = `Es ist ${currentPlayer === 'red' ? 'rote' : 'gelbe'} Spieler's Zug.`;
+    document.getElementById('status').textContent = `Es ist der Zug des roten Spielers.`;
     createBoard();
 }
 
