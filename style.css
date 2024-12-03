@@ -21,6 +21,18 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
 }
 
+.status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.icon {
+    font-size: 2em;
+    margin-right: 10px;
+}
+
 #board {
     display: grid;
     grid-template-columns: repeat(7, 60px);
