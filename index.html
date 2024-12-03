@@ -10,10 +10,21 @@
 <body>
     <div class="container">
         <h1>Vier-Gewinn Spiel</h1>
+        <div class="status-bar">
+            <span id="trophy" class="icon">&#127942;</span>
+            <span id="wins">Siege: 0</span>
+        </div>
         <div id="board"></div>
         <p id="status">Es ist der Zug des roten Spielers.</p>
         <button id="reset" onclick="resetGame()">Neues Spiel</button>
+        <button id="mode-toggle" onclick="toggleMode()">Gegen Computer spielen</button>
     </div>
+
+    <!-- Hintergrundmusik -->
+    <audio id="background-music" autoplay loop>
+        <source src="https://www.youtube.com/watch?v=deOlorbZ_sE" type="audio/mpeg">
+    </audio>
+
     <script src="script.js"></script>
 </body>
 </html>
