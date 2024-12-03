@@ -3,6 +3,8 @@ const cols = 7;
 let board = [];
 let currentPlayer = 'red';
 let gameOver = false;
+let playerWins = 0;
+let isComputerMode = false;
 
 function createBoard() {
     const boardElement = document.getElementById('board');
@@ -20,7 +22,7 @@ function createBoard() {
 }
 
 function handleClick(col) {
-    if (gameOver) return;
+    if (gameOver || isComputerMode && currentPlayer === 'yellow') return;
 
     for (let row = rows - 1; row >= 0; row--) {
         if (!board[row][col]) {
@@ -28,6 +30,8 @@ function handleClick(col) {
             updateBoard();
             if (checkWinner(row, col)) {
                 setTimeout(() => {
+                    playerWins++;
+                    document.getElementById('wins').textContent = `Siege: ${playerWins}`;
                     document.getElementById('status').textContent = `${currentPlayer === 'red' ? 'Der rote' : 'Der gelbe'} Spieler hat gewonnen!`;
                     gameOver = true;
                     triggerConfetti();
@@ -36,9 +40,21 @@ function handleClick(col) {
             }
             currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red';
             document.getElementById('status').textContent = `Es ist der Zug des ${currentPlayer === 'red' ? 'roten' : 'gelben'} Spielers.`;
+            if (isComputerMode && currentPlayer === 'yellow') {
+                setTimeout(computerMove, 500);
+            }
             return;
         }
     }
+}
+
+function computerMove() {
+    const emptyCols = [];
+    for (let col = 0; col < cols; col++) {
+        if (!board[0][col]) emptyCols.push(col);
+    }
+    const randomCol = emptyCols[Math.floor(Math.random() * emptyCols.length)];
+    handleClick(randomCol);
 }
 
 function updateBoard() {
@@ -58,15 +74,10 @@ function updateBoard() {
 }
 
 function checkWinner(row, col) {
-    // Überprüfen horizontale Linie
     if (checkDirection(row, col, 0, 1)) return true;
-    // Überprüfen vertikale Linie
     if (checkDirection(row, col, 1, 0)) return true;
-    // Überprüfen diagonal (links oben nach rechts unten)
     if (checkDirection(row, col, 1, 1)) return true;
-    // Überprüfen diagonal (rechts oben nach links unten)
     if (checkDirection(row, col, 1, -1)) return true;
-
     return false;
 }
 
@@ -76,14 +87,12 @@ function checkDirection(row, col, rowDir, colDir) {
     let r = row + rowDir;
     let c = col + colDir;
 
-    // Überprüfen in eine Richtung
     while (r >= 0 && r < rows && c >= 0 && c < cols && board[r][c] === color) {
         count++;
         r += rowDir;
         c += colDir;
     }
 
-    // Überprüfen in die andere Richtung
     r = row - rowDir;
     c = col - colDir;
     while (r >= 0 && r < rows && c >= 0 && c < cols && board[r][c] === color) {
@@ -109,6 +118,12 @@ function resetGame() {
     gameOver = false;
     document.getElementById('status').textContent = `Es ist der Zug des roten Spielers.`;
     createBoard();
+}
+
+function toggleMode() {
+    isComputerMode = !isComputerMode;
+    document.getElementById('mode-toggle').textContent = isComputerMode ? 'Gegen Menschen spielen' : 'Gegen Computer spielen';
+    resetGame();
 }
 
 createBoard();
