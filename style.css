@@ -1,3 +1,4 @@
+/* Hintergrund-Bild für den Tiger */
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -5,11 +6,19 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f1f1f1;
+    background-image: url('https://www.wallpaperflare.com/static/481/262/80/tiger-animal-wildlife-cats-wallpaper.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
 }
 
+/* Container für das Spiel */
 .container {
     text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
 }
 
 #board {
@@ -26,11 +35,12 @@ body {
     height: 60px;
     border-radius: 50%;
     background-color: #fff;
-    border: 2px solid #333;
+    border: 3px solid #333;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: background-color 0.3s ease;
 }
 
 .cell.red {
@@ -44,11 +54,21 @@ body {
 #status {
     margin-top: 20px;
     font-size: 1.5em;
+    font-weight: bold;
 }
 
 button {
     margin-top: 20px;
     padding: 10px 20px;
-    font-size: 1em;
+    font-size: 1.2em;
     cursor: pointer;
+    border: none;
+    background-color: #f39c12;
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #e67e22;
 }
